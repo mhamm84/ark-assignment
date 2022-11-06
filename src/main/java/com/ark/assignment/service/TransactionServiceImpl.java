@@ -70,6 +70,7 @@ public class TransactionServiceImpl implements TransactionService {
         transactionModel.setAmount(transactionEntity.getAmount().doubleValue());
         transactionModel.setTxnType(TransactionType.fromValue(transactionEntity.getType().getName()));
         transactionModel.setCreated(transactionEntity.getCreatedDateTime());
+        transactionModel.setInvestorId(investorEntity.getId());
 
         log.info(String.format("transaction: %s, applied to fund: %s", transactionModel, fundEntity));
 
@@ -78,7 +79,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Transactional
     @Override
-    public FundSummaryResponse findTransactionsForInvestor(Long clientId, Long fundId, Long investorId, LocalDate start, LocalDate end, TransactionType type) {
+    public FundSummaryResponse investorReport(Long clientId, Long fundId, Long investorId, LocalDate start, LocalDate end, TransactionType type) {
 
         List<TransactionEntity> txns;
         List<TransactionTypeSummaryEntity> summary;
@@ -94,6 +95,29 @@ public class TransactionServiceImpl implements TransactionService {
             summary = transactionRepository.findTransactionsForInvestorSummary(fundId, investorId);
         }
 
+        return getFundSummaryResponse(type, txns, summary);
+    }
+
+    @Override
+    public FundSummaryResponse fundReport(Long clientId, Long fundId, LocalDate start, LocalDate end, TransactionType type) {
+        List<TransactionEntity> txns;
+        List<TransactionTypeSummaryEntity> summary;
+
+        if(start != null && end != null) {
+            txns =  transactionRepository.findTransactionsForFundBetween(fundId, start.atStartOfDay(), end.atStartOfDay());
+            summary = transactionRepository.findTransactionsForFundBetweenSummary(fundId, start.atStartOfDay(), end.atStartOfDay());
+        }else if(start != null) {
+            txns =  transactionRepository.findTransactionsForFundFrom(fundId, start.atStartOfDay());
+            summary = transactionRepository.findTransactionsForFundFromSummary(fundId, start.atStartOfDay());
+        } else {
+            txns =  transactionRepository.findTransactionsForFund(fundId);
+            summary = transactionRepository.findTransactionsForFundSummary(fundId);
+        }
+
+        return getFundSummaryResponse(type, txns, summary);
+    }
+
+    private FundSummaryResponse getFundSummaryResponse(TransactionType type, List<TransactionEntity> txns, List<TransactionTypeSummaryEntity> summary) {
         List<Transaction> modelTxns;
         List<TransactionTypeSummary> modelSummaries;
 
@@ -127,6 +151,7 @@ public class TransactionServiceImpl implements TransactionService {
         t.setAmount(entity.getAmount().doubleValue());
         t.setCreated(entity.getCreatedDateTime());
         t.setTxnType(toModel(entity.getType()));
+        t.setInvestorId(entity.getInvestor().getId());
 
         return t;
     }

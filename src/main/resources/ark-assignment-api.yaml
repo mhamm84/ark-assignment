@@ -57,6 +57,10 @@ components:
         balance:
           type: number
           format: double
+        investors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Investor'
 
     Investor:
       type: object
@@ -83,6 +87,9 @@ components:
         amount:
           type: number
           format: double
+        investorId:
+          type: integer
+          format: int64
 
     TransactionType:
       type: string
@@ -306,6 +313,40 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
+  /client/{clientId}/fund/{fundId}:
+    get:
+      summary: Gets a Fund
+      operationId: getFund
+      parameters:
+        - name: clientId
+          in: path
+          schema:
+            type: integer
+            format: int64
+          required: true
+        - name: fundId
+          in: path
+          schema:
+            type: integer
+            format: int64
+          required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Fund'
+
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
   /client/{clientId}/investor:
     post:
       summary: Create a new investor for a client
@@ -360,11 +401,10 @@ paths:
       responses:
         '200':
           description: Success
-          headers:
-            Location:
+          content:
+            application/json:
               schema:
-                type: string
-              description: URL of the applied transaction
+                $ref: '#/components/schemas/Transaction'
 
         '400':
           $ref: '#/components/responses/BadRequest'
@@ -553,7 +593,6 @@ paths:
           schema:
             $ref: '#/components/schemas/TransactionType'
 
-
       responses:
         '200':
           description: Success
@@ -588,6 +627,20 @@ paths:
             type: integer
             format: int64
           required: true
+        - name: start
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: end
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: type
+          in: query
+          schema:
+            $ref: '#/components/schemas/TransactionType'
 
       responses:
         '200':

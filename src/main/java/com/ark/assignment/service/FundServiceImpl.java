@@ -3,10 +3,10 @@ package com.ark.assignment.service;
 import com.ark.assignment.entity.ClientEntity;
 import com.ark.assignment.entity.FundEntity;
 import com.ark.assignment.entity.InvestorEntity;
-import com.ark.assignment.exception.ErrorCode;
 import com.ark.assignment.exception.FundNotFoundException;
 import com.ark.assignment.exception.InvestorNotFoundException;
 import com.ark.assignment.models.Fund;
+import com.ark.assignment.models.Investor;
 import com.ark.assignment.models.NewFundRequest;
 import com.ark.assignment.repository.ClientRepository;
 import com.ark.assignment.repository.FundRepository;
@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -41,14 +42,13 @@ public class FundServiceImpl implements FundService {
 
         fundEntity = fundRepository.save(fundEntity);
 
-        Fund fundModel = new Fund();
-        fundModel.setId(fundEntity.getId());
-        fundModel.setName(fundEntity.getName());
-        fundModel.setDescription(fundEntity.getDescription());
-        fundModel.setTicker(fundEntity.getTicker());
-        fundModel.setBalance(fundEntity.getBalance().doubleValue());
+        return getFund(fundEntity);
+    }
 
-        return fundModel;
+    @Override
+    public Fund findById(Long fundId) {
+        FundEntity fundEntity = fundRepository.findById(fundId).orElseThrow(() -> new FundNotFoundException(String.format("no fund found with id %d", fundId)));
+        return getFund(fundEntity);
     }
 
     @Transactional
@@ -65,7 +65,27 @@ public class FundServiceImpl implements FundService {
         fundEntity = fundRepository.save(fundEntity);
 
         log.info(fundEntity.toString());
+    }
 
+    private Fund getFund(FundEntity fundEntity) {
+        Fund fundModel = new Fund();
+        fundModel.setId(fundEntity.getId());
+        fundModel.setName(fundEntity.getName());
+        fundModel.setDescription(fundEntity.getDescription());
+        fundModel.setTicker(fundEntity.getTicker());
+        fundModel.setBalance(fundEntity.getBalance().doubleValue());
 
+        fundModel.setInvestors(fundEntity.getInvestors().stream()
+                .map(inv -> toModel(inv))
+                .collect(Collectors.toList()));
+
+        return fundModel;
+    }
+
+    private Investor toModel(InvestorEntity entity){
+        Investor model = new Investor();
+        model.setId(entity.getId());
+        model.setName(entity.getName());
+        return model;
     }
 }

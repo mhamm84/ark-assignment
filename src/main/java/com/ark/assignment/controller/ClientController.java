@@ -36,6 +36,11 @@ public class ClientController implements ClientApi {
     }
 
     @Override
+    public ResponseEntity<Fund> getFund(Long clientId, Long fundId) {
+        return ResponseEntity.ok().body(fundService.findById(fundId));
+    }
+
+    @Override
     public ResponseEntity<Void> addInvestorToFund(Long clientId, Long fundId, Long investorId) {
         fundService.addInvestorToFund(clientId, fundId, investorId);
         return ResponseEntity.ok().build();
@@ -60,13 +65,15 @@ public class ClientController implements ClientApi {
 
     @Override
     public ResponseEntity<FundSummaryResponse> investorFundReport(Long clientId, Long fundId, Long investorId, LocalDate start, LocalDate end, TransactionType type) {
-
-        FundSummaryResponse response = transactionService.findTransactionsForInvestor(clientId, fundId, investorId, start, end, type);
-
+        FundSummaryResponse response = transactionService.investorReport(clientId, fundId, investorId, start, end, type);
         return ResponseEntity.ok().body(response);
-
     }
 
+    @Override
+    public ResponseEntity<FundSummaryResponse> fundReport(Long clientId, Long fundId, LocalDate start, LocalDate end, TransactionType type) {
+        FundSummaryResponse response = transactionService.fundReport(clientId, fundId, start, end, type);
+        return ResponseEntity.ok().body(response);
+    }
 
 
 }

@@ -10,6 +10,9 @@ public interface TransactionService {
 
     Transaction applyTransaction(Long clientId, Long fundId, Long investorId, TransactionRequest transactionRequest);
 
-    FundSummaryResponse findTransactionsForInvestor(Long clientId, Long fundId, Long investorId, LocalDate start, LocalDate end, TransactionType type);
+    FundSummaryResponse investorReport(Long clientId, Long fundId, Long investorId, LocalDate start, LocalDate end, TransactionType type);
+
+    FundSummaryResponse fundReport(Long clientId, Long fundId, LocalDate start, LocalDate end, TransactionType type);
+
 
 }

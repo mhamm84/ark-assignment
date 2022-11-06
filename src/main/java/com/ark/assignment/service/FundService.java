@@ -10,4 +10,6 @@ public interface FundService {
     Fund create(Long clientId, NewFundRequest newFundRequest);
 
     void addInvestorToFund(Long clientId, Long fundId, Long investorId);
+
+    Fund findById(Long fundId);
 }
