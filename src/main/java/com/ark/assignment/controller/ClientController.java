@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @RestController
 @RequiredArgsConstructor
@@ -55,4 +57,16 @@ public class ClientController implements ClientApi {
                 buildAndExpand(transaction.getId()).toUri();
         return ResponseEntity.created(location).body(transaction);
     }
+
+    @Override
+    public ResponseEntity<FundSummaryResponse> investorFundReport(Long clientId, Long fundId, Long investorId, LocalDate start, LocalDate end, TransactionType type) {
+
+        FundSummaryResponse response = transactionService.findTransactionsForInvestor(clientId, fundId, investorId, start, end, type);
+
+        return ResponseEntity.ok().body(response);
+
+    }
+
+
+
 }

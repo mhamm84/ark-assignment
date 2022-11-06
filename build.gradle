@@ -1,7 +1,7 @@
 plugins {
     id 'org.springframework.boot' version '2.7.5'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
-    id 'org.openapi.generator' version '4.3.1'
+    id 'org.openapi.generator' version '6.2.1'
     id 'java'
 }
 
@@ -52,6 +52,7 @@ openApiGenerate {
 }
 
 // forces generation of spring controllers on compile, adding them to the sources for compilation
+processResources.dependsOn tasks.openApiGenerate
 compileJava.dependsOn tasks.openApiGenerate
 sourceSets.main.java.srcDir "$buildDir/generated/src/main/java"
 sourceSets.main.resources.srcDir "$buildDir/generated/src/main/resources"

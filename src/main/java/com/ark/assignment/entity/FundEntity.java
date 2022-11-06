@@ -40,7 +40,7 @@ public class FundEntity {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "fund_id", nullable = false)
+    //@JoinColumn(name = "fund_id", nullable = false)
     private ClientEntity client;
 
     @ToString.Exclude

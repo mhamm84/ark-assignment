@@ -87,11 +87,11 @@ components:
     TransactionType:
       type: string
       enum:
-        - Contribution
-        - Interest Income
-        - Distribution
-        - General Expense
-        - Management Fee
+        - CONTRIBUTION
+        - INTEREST_INCOME
+        - DISTRIBUTION
+        - GENERAL_EXPENSE
+        - MANAGEMENT_FEE
 
     TransactionTypeSummary:
       properties:
@@ -471,7 +471,7 @@ paths:
 
   /client/{clientId}/fund/{fundId}/investor/{investorId}/transaction/{txnId}:
     get:
-      summary: Apply a Transaction from an investor to a fund
+      summary: Get a Transaction applied to a fund by an investor
       operationId: get Transaction
       parameters:
         - in: path
@@ -506,6 +506,97 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Transaction'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /client/{clientId}/fund/{fundId}/investor/{investorId}/report:
+    get:
+      summary: Get report for investor, for fund
+      operationId: investorFundReport
+      parameters:
+        - name: clientId
+          in: path
+          schema:
+            type: integer
+            format: int64
+          required: true
+        - name: fundId
+          in: path
+          schema:
+            type: integer
+            format: int64
+          required: true
+        - name: investorId
+          in: path
+          schema:
+            type: integer
+            format: int64
+          required: true
+        - name: start
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: end
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: type
+          in: query
+          schema:
+            $ref: '#/components/schemas/TransactionType'
+
+
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FundSummaryResponse'
+
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /client/{clientId}/fund/{fundId}/report:
+    get:
+      summary: Get reporting for a fund
+      operationId: fundReport
+      parameters:
+        - name: clientId
+          in: path
+          schema:
+            type: integer
+            format: int64
+          required: true
+        - name: fundId
+          in: path
+          schema:
+            type: integer
+            format: int64
+          required: true
+
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FundSummaryResponse'
+
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':

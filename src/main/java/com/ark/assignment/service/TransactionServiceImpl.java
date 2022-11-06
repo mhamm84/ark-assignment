@@ -1,15 +1,10 @@
 package com.ark.assignment.service;
 
-import com.ark.assignment.entity.FundEntity;
-import com.ark.assignment.entity.InvestorEntity;
-import com.ark.assignment.entity.TransactionEntity;
-import com.ark.assignment.entity.TransactionTypeEntity;
+import com.ark.assignment.entity.*;
 import com.ark.assignment.exception.ErrorCode;
 import com.ark.assignment.exception.FundNotFoundException;
 import com.ark.assignment.exception.TransactionTypeNotFoundException;
-import com.ark.assignment.models.Transaction;
-import com.ark.assignment.models.TransactionRequest;
-import com.ark.assignment.models.TransactionType;
+import com.ark.assignment.models.*;
 import com.ark.assignment.repository.*;
 import com.ark.assignment.transactions.BalanceCalculatorContext;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +14,12 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -74,5 +74,71 @@ public class TransactionServiceImpl implements TransactionService {
         log.info(String.format("transaction: %s, applied to fund: %s", transactionModel, fundEntity));
 
         return transactionModel;
+    }
+
+    @Transactional
+    @Override
+    public FundSummaryResponse findTransactionsForInvestor(Long clientId, Long fundId, Long investorId, LocalDate start, LocalDate end, TransactionType type) {
+
+        List<TransactionEntity> txns;
+        List<TransactionTypeSummaryEntity> summary;
+
+        if(start != null && end != null) {
+            txns =  transactionRepository.findTransactionsForInvestorBetween(fundId, investorId, start.atStartOfDay(), end.atStartOfDay());
+            summary = transactionRepository.findTransactionsForInvestorBetweenSummary(fundId, investorId, start.atStartOfDay(), end.atStartOfDay());
+        }else if(start != null) {
+            txns =  transactionRepository.findTransactionsForInvestorFrom(fundId, investorId, start.atStartOfDay());
+            summary = transactionRepository.findTransactionsForInvestorFromSummary(fundId, investorId, start.atStartOfDay());
+        } else {
+            txns =  transactionRepository.findTransactionsForInvestor(fundId, investorId);
+            summary = transactionRepository.findTransactionsForInvestorSummary(fundId, investorId);
+        }
+
+        List<Transaction> modelTxns;
+        List<TransactionTypeSummary> modelSummaries;
+
+        boolean filerByType = type != null ? true : false;
+        if(filerByType) {
+            modelTxns = txns.stream()
+                    .filter(t -> t.getType().getName().equals(type.getValue()))
+                    .map(t -> toModel(t))
+                    .collect(Collectors.toList());
+        } else {
+            modelTxns = txns.stream()
+                    .map(t -> toModel(t))
+                    .collect(Collectors.toList());
+        }
+
+        modelSummaries = summary.stream()
+                .map(s -> toModel(s))
+                .collect(Collectors.toList());
+
+
+        FundSummaryResponse response = new FundSummaryResponse();
+        response.setTransactions(modelTxns);
+        response.setSummaries(modelSummaries);
+
+        return response;
+    }
+
+    public static Transaction toModel(TransactionEntity entity) {
+        Transaction t = new Transaction();
+        t.setId(entity.getId());
+        t.setAmount(entity.getAmount().doubleValue());
+        t.setCreated(entity.getCreatedDateTime());
+        t.setTxnType(toModel(entity.getType()));
+
+        return t;
+    }
+
+    public static TransactionType toModel(TransactionTypeEntity entityType) {
+        return TransactionType.fromValue(entityType.getName());
+    }
+
+    public static TransactionTypeSummary toModel(TransactionTypeSummaryEntity entity) {
+        TransactionTypeSummary model = new TransactionTypeSummary();
+        model.setTxnType(TransactionType.fromValue(entity.getType()));
+        model.setTotal(entity.getTotal().doubleValue());
+        return model;
     }
 }
