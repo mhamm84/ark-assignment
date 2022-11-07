@@ -1,0 +1,408 @@
+{
+	"info": {
+		"_postman_id": "557cab3a-0db8-424c-95d2-fca20bd18689",
+		"name": "Ark",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1523663"
+	},
+	"item": [
+		{
+			"name": "admin - createClient",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "adminPass",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Client 1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/admin/client",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"admin",
+						"client"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin - getClient",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "adminPass",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/admin/client/1",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"admin",
+						"client",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createFund",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "userPass",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Fund 2\",\n    \"description\": \"Best fund ever! 1000 bagger!\",\n    \"ticker\": \"BAG\",\n    \"balance\": 0.00\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/client/1/fund",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"client",
+						"1",
+						"fund"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createInvestor",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "adminPass",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Rob the Rave\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/client/1/investor",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"client",
+						"1",
+						"investor"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addInvestorToFund",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "adminPass",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Dave the Rave\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/client/1/fund/1/investor/1",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"client",
+						"1",
+						"fund",
+						"1",
+						"investor",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "applyTransaction",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "adminPass",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"txnType\": \"CONTRIBUTION\",\n  \"amount\": 1000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/client/1/fund/1/investor/1/transaction",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"client",
+						"1",
+						"fund",
+						"1",
+						"investor",
+						"1",
+						"transaction"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "investorReport",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "adminPass",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"txnType\": \"Contribution\",\n  \"amount\": 1000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/client/1/fund/1/investor/1/report?start=2022-01-06&end=2022-11-07",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"client",
+						"1",
+						"fund",
+						"1",
+						"investor",
+						"1",
+						"report"
+					],
+					"query": [
+						{
+							"key": "start",
+							"value": "2022-01-06"
+						},
+						{
+							"key": "end",
+							"value": "2022-11-07"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "fundReport",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "adminPass",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"txnType\": \"Contribution\",\n  \"amount\": 1000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/client/1/fund/1/report",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"client",
+						"1",
+						"fund",
+						"1",
+						"report"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getFund",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "adminPass",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/client/1/fund/1",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"client",
+						"1",
+						"fund",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

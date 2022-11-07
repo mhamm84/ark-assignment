@@ -6,4 +6,6 @@ import com.ark.assignment.models.NewClientRequest;
 public interface ClientService {
 
     Client create(NewClientRequest newClientRequest);
+
+    Client findById(Long clientsId);
 }

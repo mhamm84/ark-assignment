@@ -316,6 +316,8 @@ paths:
   /client/{clientId}/fund/{fundId}:
     get:
       summary: Gets a Fund
+      security:
+        - BasicAuth: [ ]
       operationId: getFund
       parameters:
         - name: clientId
@@ -390,6 +392,8 @@ paths:
 
     get:
       summary: Gets a Transaction by id
+      security:
+        - BasicAuth: [ ]
       operationId: getTransaction
       parameters:
         - in: path
@@ -418,6 +422,8 @@ paths:
   /client/{clientId}/fund/{fundId}/investor/{investorId}:
     post:
       summary: Add an investor to a fund
+      security:
+        - BasicAuth: [ ]
       operationId: addInvestorToFund
       parameters:
         - in: path
@@ -460,6 +466,8 @@ paths:
   /client/{clientId}/fund/{fundId}/investor/{investorId}/transaction:
     post:
       summary: Apply a Transaction from an investor to a fund
+      security:
+        - BasicAuth: [ ]
       operationId: applyTransaction
       parameters:
         - in: path
@@ -512,6 +520,8 @@ paths:
   /client/{clientId}/fund/{fundId}/investor/{investorId}/transaction/{txnId}:
     get:
       summary: Get a Transaction applied to a fund by an investor
+      security:
+        - BasicAuth: [ ]
       operationId: get Transaction
       parameters:
         - in: path
@@ -558,6 +568,8 @@ paths:
   /client/{clientId}/fund/{fundId}/investor/{investorId}/report:
     get:
       summary: Get report for investor, for fund
+      security:
+        - BasicAuth: [ ]
       operationId: investorFundReport
       parameters:
         - name: clientId
@@ -613,6 +625,8 @@ paths:
   /client/{clientId}/fund/{fundId}/report:
     get:
       summary: Get reporting for a fund
+      security:
+        - BasicAuth: [ ]
       operationId: fundReport
       parameters:
         - name: clientId

@@ -75,9 +75,11 @@ public class FundServiceImpl implements FundService {
         fundModel.setTicker(fundEntity.getTicker());
         fundModel.setBalance(fundEntity.getBalance().doubleValue());
 
-        fundModel.setInvestors(fundEntity.getInvestors().stream()
-                .map(inv -> toModel(inv))
-                .collect(Collectors.toList()));
+        if(fundEntity.getInvestors() != null) {
+            fundModel.setInvestors(fundEntity.getInvestors().stream()
+                    .map(inv -> toModel(inv))
+                    .collect(Collectors.toList()));
+        }
 
         return fundModel;
     }

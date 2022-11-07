@@ -35,6 +35,8 @@ public class ClientController implements ClientApi {
                 .build();
     }
 
+
+
     @Override
     public ResponseEntity<Fund> getFund(Long clientId, Long fundId) {
         return ResponseEntity.ok().body(fundService.findById(fundId));

@@ -7,6 +7,7 @@ public enum ErrorCode {
 
     FUND_REPO_ERROR("error saving fund"),
     FUND_NOT_FOUND("fund not found"),
+    CLIENT_NOT_FOUND("client not found"),
 
     TRANSACTION_TYPE_NOT_FOUNT("transaction type not found"),
 

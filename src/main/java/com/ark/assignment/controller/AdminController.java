@@ -36,6 +36,6 @@ public class AdminController implements AdminApi {
         c.setId(1L);
         c.setName("Test Client!");
 
-        return ResponseEntity.ok(c);
+        return ResponseEntity.ok(clientService.findById(clientId));
     }
 }

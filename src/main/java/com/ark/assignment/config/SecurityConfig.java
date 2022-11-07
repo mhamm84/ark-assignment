@@ -25,7 +25,7 @@ public class SecurityConfig {
                     .hasRole("ADMIN")
                     .antMatchers("/admin/**")
                     .hasAnyRole("ADMIN")
-                    .antMatchers("/user/**")
+                    .antMatchers("/client/**")
                     .hasAnyRole("USER", "ADMIN")
                     .antMatchers("/console/**", "/swagger-ui/**")
                     .anonymous()
