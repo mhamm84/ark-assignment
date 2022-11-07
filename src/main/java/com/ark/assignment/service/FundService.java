@@ -1,9 +1,6 @@
 package com.ark.assignment.service;
 
-import com.ark.assignment.models.Client;
-import com.ark.assignment.models.Fund;
-import com.ark.assignment.models.NewClientRequest;
-import com.ark.assignment.models.NewFundRequest;
+import com.ark.assignment.models.*;
 
 public interface FundService {
 
@@ -32,4 +29,14 @@ public interface FundService {
      * @return
      */
     Fund findById(Long fundId);
+
+    /**
+     * Update a Funds details
+     *
+     * @param clientId
+     * @param fundId
+     * @param updateFundRequest
+     * @return
+     */
+    Fund updateFund(Long clientId, Long fundId, UpdateFundRequest updateFundRequest);
 }

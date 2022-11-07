@@ -8,6 +8,7 @@ import com.ark.assignment.exception.InvestorNotFoundException;
 import com.ark.assignment.models.Fund;
 import com.ark.assignment.models.Investor;
 import com.ark.assignment.models.NewFundRequest;
+import com.ark.assignment.models.UpdateFundRequest;
 import com.ark.assignment.repository.ClientRepository;
 import com.ark.assignment.repository.FundRepository;
 import com.ark.assignment.repository.InvestorRepository;
@@ -40,6 +41,17 @@ public class FundServiceImpl implements FundService {
         fundEntity.setBalance(BigDecimal.valueOf(newFundRequest.getBalance()));
         fundEntity.setClient(clientEntity);
 
+        fundEntity = fundRepository.save(fundEntity);
+
+        return getFund(fundEntity);
+    }
+
+    @Override
+    public Fund updateFund(Long clientId, Long fundId, UpdateFundRequest updateFundRequest) {
+        FundEntity fundEntity = fundRepository.findById(fundId).orElseThrow(() -> new FundNotFoundException(String.format("no fund found with id %d", fundId)));
+        fundEntity.setName(updateFundRequest.getName());
+        fundEntity.setDescription(updateFundRequest.getDescription());
+        fundEntity.setTicker(updateFundRequest.getTicker());
         fundEntity = fundRepository.save(fundEntity);
 
         return getFund(fundEntity);

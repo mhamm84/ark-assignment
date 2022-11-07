@@ -32,7 +32,11 @@ public class ClientController implements ClientApi {
         return ResponseEntity.created(location).body(fund);
     }
 
-
+    @Override
+    public ResponseEntity<Fund> updateFund(Long clientId, Long fundId, UpdateFundRequest updateFundRequest) {
+        Fund fund = fundService.updateFund(clientId, fundId, updateFundRequest);
+        return ResponseEntity.ok().body(fund);
+    }
 
     @Override
     public ResponseEntity<Fund> getFund(Long clientId, Long fundId) {

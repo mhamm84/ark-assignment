@@ -159,6 +159,22 @@ components:
           nullable: false
           format: double
 
+    UpdateFundRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: false
+          minLength: 1
+        description:
+          type: string
+          nullable: false
+          minLength: 1
+        ticker:
+          type: string
+          nullable: false
+          minLength: 3
+
     NewInvestorRequest:
       type: object
       properties:
@@ -393,6 +409,46 @@ paths:
           $ref: '#/components/responses/NotFound'
 
   /client/{clientId}/fund/{fundId}:
+    patch:
+      summary: Update a Fund'
+      security:
+        - BasicAuth: [ ]
+      operationId: updateFund
+      parameters:
+        - name: clientId
+          in: path
+          schema:
+            type: integer
+            format: int64
+          required: true
+        - name: fundId
+          in: path
+          schema:
+            type: integer
+            format: int64
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateFundRequest'
+      responses:
+        '200':
+          description: Fund successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Fund'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
     get:
       summary: Gets a Fund
       security:
