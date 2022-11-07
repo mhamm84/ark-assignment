@@ -1,12 +1,10 @@
 package com.ark.assignment.exception;
 
-
 import com.ark.assignment.models.ApiError;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConversionException;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -16,12 +14,10 @@ import java.time.LocalDateTime;
 
 @RestControllerAdvice
 @Slf4j
+/**
+ * Global exception handlers
+ */
 public class ArkErrorAdvice {
-
-// HttpMessageNotReadableException
-
-
-    // HttpRequestMethodNotSupportedException
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)

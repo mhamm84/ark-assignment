@@ -5,7 +5,10 @@ import com.ark.assignment.exception.ErrorCode;
 import com.ark.assignment.exception.FundNotFoundException;
 import com.ark.assignment.exception.TransactionTypeNotFoundException;
 import com.ark.assignment.models.*;
-import com.ark.assignment.repository.*;
+import com.ark.assignment.repository.FundRepository;
+import com.ark.assignment.repository.InvestorRepository;
+import com.ark.assignment.repository.TransactionRepository;
+import com.ark.assignment.repository.TransactionTypeRepository;
 import com.ark.assignment.transactions.BalanceCalculatorContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,11 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,7 +25,6 @@ import java.util.stream.Collectors;
 @Slf4j
 public class TransactionServiceImpl implements TransactionService {
 
-    private final ClientRepository clientRepository;
     private final FundRepository fundRepository;
     private final InvestorRepository investorRepository;
     private final TransactionRepository transactionRepository;
@@ -38,6 +36,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public Transaction applyTransaction(Long clientId, Long fundId, Long investorId, TransactionRequest transactionRequest) {
 
+        // Find the data we need to build the transaction
         TransactionTypeEntity txnType = transactionTypeRepository.findByName(transactionRequest.getTxnType().getValue());
         if(txnType == null) {
             throw new TransactionTypeNotFoundException(
@@ -49,6 +48,7 @@ public class TransactionServiceImpl implements TransactionService {
         FundEntity fundEntity = fundRepository.findById(fundId)
                 .orElseThrow(() -> new FundNotFoundException(String.format("could not find fund with id: %d", fundId)));
 
+        // Create a save a new transaction
         TransactionEntity transactionEntity = new TransactionEntity();
         transactionEntity.setAmount(BigDecimal.valueOf(transactionRequest.getAmount()));
         transactionEntity.setType(txnType);
@@ -56,6 +56,7 @@ public class TransactionServiceImpl implements TransactionService {
         transactionEntity.setFund(fundEntity);
         transactionEntity = transactionRepository.save(transactionEntity);
 
+        // Set the balance by applying the transaction
         fundEntity.setBalance(
                 balanceCalculatorContext.calculateBalance(
                         fundEntity.getBalance(),
@@ -65,6 +66,7 @@ public class TransactionServiceImpl implements TransactionService {
         );
         fundEntity = fundRepository.save(fundEntity);
 
+        // create a model to return
         Transaction transactionModel = new Transaction();
         transactionModel.setId(transactionEntity.getId());
         transactionModel.setAmount(transactionEntity.getAmount().doubleValue());

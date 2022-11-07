@@ -10,6 +10,9 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Creates a Map of BalanceCalculator's based on TransactionType
+ */
 @Configuration
 @AllArgsConstructor
 public class BalanceCalculatorConfig {
