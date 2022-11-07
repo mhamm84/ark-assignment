@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 public class GeneralExpenseCalculator implements BalanceCalculator {
 
     @Override
-    public BigDecimal calculate(BigDecimal startingBalance, TransactionType txnType, BigDecimal amount) {
+    public BigDecimal calculate(BigDecimal startingBalance, BigDecimal amount) {
         return BigDecimal.ZERO.add(startingBalance).subtract(amount);
     }
 

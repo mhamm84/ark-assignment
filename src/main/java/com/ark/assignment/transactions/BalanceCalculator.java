@@ -9,7 +9,7 @@ import java.math.BigDecimal;
  */
 public interface BalanceCalculator {
 
-    BigDecimal calculate(BigDecimal startingBalance, TransactionType txnType, BigDecimal amount);
+    BigDecimal calculate(BigDecimal startingBalance, BigDecimal amount);
 
     TransactionType transactionType();
 }

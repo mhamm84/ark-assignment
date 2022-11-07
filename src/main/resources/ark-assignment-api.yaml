@@ -131,6 +131,14 @@ components:
           nullable: false
           minLength: 1
 
+    UpdateClientRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: false
+          minLength: 1
+
     NewFundRequest:
       type: object
       properties:
@@ -231,12 +239,12 @@ paths:
               $ref: '#/components/schemas/NewClientRequest'
       responses:
         '201':
-          description: Transaction successfully applied
+          description: Client successfully created
           headers:
             Location:
               schema:
                 type: string
-              description: URL of the applied transaction
+              description: URL of the client resource
           content:
             application/json:
               schema:
@@ -252,6 +260,45 @@ paths:
           $ref: '#/components/responses/NotFound'
 
   /admin/client/{clientId}:
+    patch:
+      summary: Update a Client'
+      security:
+        - BasicAuth: [ ]
+      operationId: updateClient
+      parameters:
+        - name: clientId
+          in: path
+          schema:
+            type: integer
+            format: int64
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateClientRequest'
+      responses:
+        '200':
+          description: Client successfully updated
+          headers:
+            Location:
+              schema:
+                type: string
+              description: URL of the client resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
     get:
       summary: Get a client by id
       security:
@@ -271,6 +318,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Client'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    delete:
+      summary: Delete a Client'
+      security:
+        - BasicAuth: [ ]
+      operationId: deleteClient
+      parameters:
+        - name: clientId
+          in: path
+          schema:
+            type: integer
+            format: int64
+          required: true
+      responses:
+        '200':
+          description: Client successfully deleted
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':

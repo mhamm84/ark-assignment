@@ -23,7 +23,7 @@ public class BalanceCalculatorContext {
         if (Objects.isNull(balanceCalculator)) {
             throw new BalanceCalculatorNotFoundException("Balance calculator not found for Transaction Type not found. type: " + txnType);
         }
-        return balanceCalculator.calculate(startingBalance, txnType, amount);
+        return balanceCalculator.calculate(startingBalance, amount);
     }
 }
 

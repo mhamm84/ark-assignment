@@ -83,6 +83,83 @@
 			"response": []
 		},
 		{
+			"name": "admin - deleteClient",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "adminPass",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/admin/client/1",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"admin",
+						"client",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin - updateClient",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "adminPass",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"The Big Fund\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/admin/client/1",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"admin",
+						"client",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "createFund",
 			"request": {
 				"auth": {
@@ -244,7 +321,7 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}/client/1/fund/1/investor/2/transaction",
+					"raw": "{{baseUrl}}/client/1/fund/1/investor/1/transaction",
 					"host": [
 						"{{baseUrl}}"
 					],
@@ -254,7 +331,7 @@
 						"fund",
 						"1",
 						"investor",
-						"2",
+						"1",
 						"transaction"
 					]
 				}
@@ -294,7 +371,7 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}/client/1/fund/1/investor/2/report?start=2022-01-06&end=2022-11-07",
+					"raw": "{{baseUrl}}/client/1/fund/1/investor/1/report?start=2022-01-06&end=2022-12-07",
 					"host": [
 						"{{baseUrl}}"
 					],
@@ -304,7 +381,7 @@
 						"fund",
 						"1",
 						"investor",
-						"2",
+						"1",
 						"report"
 					],
 					"query": [
@@ -314,7 +391,7 @@
 						},
 						{
 							"key": "end",
-							"value": "2022-11-07"
+							"value": "2022-12-07"
 						}
 					]
 				}

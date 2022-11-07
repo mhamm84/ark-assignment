@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -24,12 +25,14 @@ public class TransactionEntity {
     @CreationTimestamp
     private LocalDateTime createdDateTime;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "transaction_type_id")
+    @NotNull
     private TransactionTypeEntity type;
 
     @Digits(integer = 15, fraction = 2)
     @DecimalMin("0.00")
+    @NotNull
     private BigDecimal amount;
 
     @ToString.Exclude

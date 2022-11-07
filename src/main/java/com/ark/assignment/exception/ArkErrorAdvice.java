@@ -2,6 +2,7 @@ package com.ark.assignment.exception;
 
 import com.ark.assignment.models.ApiError;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConversionException;
@@ -19,17 +20,26 @@ import java.time.LocalDateTime;
  */
 public class ArkErrorAdvice {
 
+
+    //
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseEntity<Object> handle(DataIntegrityViolationException exception) {
+        log.error("Database integrity violation - bad request data", exception);
+        return buildErrorResponse(new ArkException(exception, ErrorCode.DATABASE_INTEGRITY_ISSUE), exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public ResponseEntity<Object> handle(HttpRequestMethodNotSupportedException exception) {
-        log.error("Resource not found.", exception);
+        log.error("Method not allowed", exception);
         return buildErrorResponse(new ArkException(exception, ErrorCode.METHOD_NOT_ALLOWED), exception.getMessage(), HttpStatus.METHOD_NOT_ALLOWED);
     }
 
     @ExceptionHandler(HttpMessageConversionException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Object> handle(HttpMessageConversionException exception) {
-        log.error("Resource not found.", exception);
+        log.error("Bad Request data", exception);
         return buildErrorResponse(new ArkException(exception, ErrorCode.BAD_REQUEST), exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 

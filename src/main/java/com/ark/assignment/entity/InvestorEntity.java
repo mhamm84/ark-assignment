@@ -5,6 +5,7 @@ import org.apache.commons.lang3.builder.HashCodeExclude;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
@@ -19,6 +20,7 @@ public class InvestorEntity {
     private Long id;
 
     @Column(name = "name")
+    @NotNull
     private String name;
 
     @Column(name = "created_date_time")

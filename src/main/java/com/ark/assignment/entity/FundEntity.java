@@ -23,10 +23,14 @@ public class FundEntity {
     private Long id;
 
     @Column(unique = true)
+    @NotNull
     private String name;
 
+    @NotNull
     private String description;
 
+    @Column(unique = true)
+    @NotNull
     private String ticker;
 
     @Column(name = "created_date_time")
@@ -41,7 +45,6 @@ public class FundEntity {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
-    //@JoinColumn(name = "fund_id", nullable = false)
     private ClientEntity client;
 
     @ToString.Exclude

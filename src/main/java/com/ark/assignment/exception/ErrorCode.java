@@ -13,6 +13,8 @@ public enum ErrorCode {
 
     BALANCE_CALC_NOT_FOUNT("balance calculator type not found"),
 
+    DATABASE_INTEGRITY_ISSUE("internal server error - database integrity issue"),
+
     INTERNAL_ERROR("internal server error"),
     BAD_REQUEST("request was invalid"),
     METHOD_NOT_ALLOWED("request sent with method which is not allowed")

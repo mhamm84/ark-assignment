@@ -6,6 +6,7 @@ import com.ark.assignment.exception.ClientNotFoundException;
 import com.ark.assignment.models.Client;
 import com.ark.assignment.models.Fund;
 import com.ark.assignment.models.NewClientRequest;
+import com.ark.assignment.models.UpdateClientRequest;
 import com.ark.assignment.repository.ClientRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,20 @@ public class ClientServiceImpl implements ClientService {
         log.info("findById: " + clientId);
         ClientEntity clientEntity = clientRepository.findById(clientId).orElseThrow(() -> new ClientNotFoundException(String.format("no client with the id of: %d", clientId)));
         return getClient(clientEntity);
+    }
+
+    @Override
+    public Client updateClient(Long clientId, UpdateClientRequest updateClientRequest) {
+
+        ClientEntity toUpdate = clientRepository.findById(clientId).orElseThrow(() -> new ClientNotFoundException(String.format("no client with the id of: %d", clientId)));
+        toUpdate.setName(updateClientRequest.getName());
+        toUpdate = clientRepository.save(toUpdate);
+        return getClient(toUpdate);
+    }
+
+    @Override
+    public void deleteClient(Long clientId) {
+        clientRepository.deleteById(clientId);
     }
 
     private Client getClient(ClientEntity clientEntity) {

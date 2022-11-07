@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 public class InterestIncomeCalculator implements BalanceCalculator {
 
     @Override
-    public BigDecimal calculate(BigDecimal startingBalance, TransactionType txnType, BigDecimal amount) {
+    public BigDecimal calculate(BigDecimal startingBalance, BigDecimal amount) {
         return BigDecimal.ZERO.add(startingBalance).add(amount);
     }
 
