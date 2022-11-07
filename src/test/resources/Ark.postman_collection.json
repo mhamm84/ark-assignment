@@ -203,6 +203,85 @@
 			"response": []
 		},
 		{
+			"name": "updateFund",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "userPass",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Bitcoin Fund\",\n    \"description\": \"Only Bitcoin companies please!!!\",\n    \"ticker\": \"BITC\"\n}\n\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/client/1/fund/1",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"client",
+						"1",
+						"fund",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getFund",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "adminPass",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/client/1/fund/1",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"client",
+						"1",
+						"fund",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "createInvestor",
 			"request": {
 				"auth": {
@@ -441,41 +520,6 @@
 						"fund",
 						"1",
 						"report"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "getFund",
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "adminPass",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "admin",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/client/1/fund/1",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"client",
-						"1",
-						"fund",
-						"1"
 					]
 				}
 			},

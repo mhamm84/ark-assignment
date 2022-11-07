@@ -56,10 +56,10 @@ admin will work with all endpoints and user will not work with /admin/** endpoin
 An exported Postman collection is available in the repo at:
 ```src/test/resources/Ark.postman_collection.json```
 
-
 ## Improvements
 There are definitely a few things I would have added with more time to make the API more robust.
 - OpenID Connect & use of JWT auth tokens 
 - Build in a mechanism (using claims in the auth token) to make sure only client data pertaining to the logged in client can be selected in queries
 - Improved logging of requests and a requestId to trace API requests from different clients
 - Add more test coverage
+- .env file to add environment config values in
