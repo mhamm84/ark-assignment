@@ -41,7 +41,7 @@ To view the API, you can import or copy and paste in the contract to this site:
 
 ### Auth
 
-The API has basic authentication to it which the API is secured against. Below are the users and passwords created for it:
+The API has basic authentication. Below are the users and passwords created for it:
 #### Admin
 - username: admin
 - password adminPass
