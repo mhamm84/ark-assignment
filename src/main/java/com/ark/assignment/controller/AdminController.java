@@ -18,24 +18,18 @@ public class AdminController implements AdminApi {
     private final ClientService clientService;
 
     @Override
-    public ResponseEntity<Void> createNewClient(NewClientRequest newClientRequest) {
+    public ResponseEntity<Client> createNewClient(NewClientRequest newClientRequest) {
 
         Client c = clientService.create(newClientRequest);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").
                 buildAndExpand(c.getId()).toUri();
-        return ResponseEntity.created(location)
-                //.body(offer)
-                .build();
+        return ResponseEntity.created(location).body(c);
 
     }
 
     @Override
     public ResponseEntity<Client> getClient(Long clientId) {
-        Client c = new Client();
-        c.setId(1L);
-        c.setName("Test Client!");
-
         return ResponseEntity.ok(clientService.findById(clientId));
     }
 }

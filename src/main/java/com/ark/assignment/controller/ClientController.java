@@ -24,15 +24,13 @@ public class ClientController implements ClientApi {
     private final TransactionService transactionService;
 
     @Override
-    public ResponseEntity<Void> createNewFund(Long clientId, NewFundRequest newFundRequest) {
+    public ResponseEntity<Fund> createNewFund(Long clientId, NewFundRequest newFundRequest) {
 
         Fund fund = fundService.create(clientId, newFundRequest);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").
                 buildAndExpand(fund.getId()).toUri();
-        return ResponseEntity.created(location)
-                //.body(fund)
-                .build();
+        return ResponseEntity.created(location).body(fund);
     }
 
 

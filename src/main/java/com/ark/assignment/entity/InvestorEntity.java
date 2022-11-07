@@ -13,8 +13,9 @@ import java.util.Set;
 @Table(name = "investor")
 @Data
 public class InvestorEntity {
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name")

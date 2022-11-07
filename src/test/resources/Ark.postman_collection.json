@@ -104,7 +104,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"Fund 2\",\n    \"description\": \"Best fund ever! 1000 bagger!\",\n    \"ticker\": \"BAG\",\n    \"balance\": 0.00\n}",
+					"raw": "{\n    \"name\": \"Bitcoin Fund\",\n    \"description\": \"Only Bitcoin companies please!\",\n    \"ticker\": \"BITGO\",\n    \"balance\": 0.00\n}\n\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -147,7 +147,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"Rob the Rave\"\n}",
+					"raw": "{\n    \"name\": \"Mr Whale\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -244,7 +244,7 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}/client/1/fund/1/investor/1/transaction",
+					"raw": "{{baseUrl}}/client/1/fund/1/investor/2/transaction",
 					"host": [
 						"{{baseUrl}}"
 					],
@@ -254,7 +254,7 @@
 						"fund",
 						"1",
 						"investor",
-						"1",
+						"2",
 						"transaction"
 					]
 				}
@@ -294,7 +294,7 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}/client/1/fund/1/investor/1/report?start=2022-01-06&end=2022-11-07",
+					"raw": "{{baseUrl}}/client/1/fund/1/investor/2/report?start=2022-01-06&end=2022-11-07",
 					"host": [
 						"{{baseUrl}}"
 					],
@@ -304,7 +304,7 @@
 						"fund",
 						"1",
 						"investor",
-						"1",
+						"2",
 						"report"
 					],
 					"query": [

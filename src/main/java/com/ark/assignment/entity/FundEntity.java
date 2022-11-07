@@ -17,8 +17,9 @@ import java.util.Set;
 @Entity
 @Table(name = "fund")
 public class FundEntity {
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true)

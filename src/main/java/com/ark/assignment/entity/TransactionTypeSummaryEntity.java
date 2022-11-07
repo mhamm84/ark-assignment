@@ -12,7 +12,6 @@ import java.math.BigDecimal;
 public class TransactionTypeSummaryEntity {
 
     private String type;
-
     private BigDecimal total;
 
     public TransactionTypeSummaryEntity(String type, BigDecimal total) {

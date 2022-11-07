@@ -237,6 +237,10 @@ paths:
               schema:
                 type: string
               description: URL of the applied transaction
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
 
         '400':
           $ref: '#/components/responses/BadRequest'
@@ -303,6 +307,10 @@ paths:
               schema:
                 type: string
               description: URL of the fund resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Fund'
 
         '400':
           $ref: '#/components/responses/BadRequest'
